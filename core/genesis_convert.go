@@ -1,20 +1,4 @@
-// Copyright 2017 The go-ethereum Authors
-// This file is part of go-ethereum.
-//
-// go-ethereum is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// go-ethereum is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with go-ethereum. If not, see <http://www.gnu.org/licenses/>.
-
-package main
+package core
 
 import (
 	"encoding/binary"
@@ -24,7 +8,6 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/core"
 	"github.com/ethereum/go-ethereum/params"
 )
 
@@ -85,9 +68,9 @@ type cppEthereumGenesisSpecLinearPricing struct {
 	Word uint64 `json:"word"`
 }
 
-// newCppEthereumGenesisSpec converts a go-ethereum genesis block into a Parity specific
+// NewCppEthereumGenesisSpec converts a go-ethereum genesis block into a Parity specific
 // chain specification format.
-func newCppEthereumGenesisSpec(network string, genesis *core.Genesis) (*cppEthereumGenesisSpec, error) {
+func NewCppEthereumGenesisSpec(network string, genesis *Genesis) (*cppEthereumGenesisSpec, error) {
 	// Only ethash is currently supported between go-ethereum and cpp-ethereum
 	if genesis.Config.Ethash == nil {
 		return nil, errors.New("unsupported consensus engine")
@@ -256,9 +239,9 @@ type parityChainSpecAltBnPairingPricing struct {
 	Pair uint64 `json:"pair"`
 }
 
-// newParityChainSpec converts a go-ethereum genesis block into a Parity specific
+// NewParityChainSpec converts a go-ethereum genesis block into a Parity specific
 // chain specification format.
-func newParityChainSpec(network string, genesis *core.Genesis, bootnodes []string) (*parityChainSpec, error) {
+func NewParityChainSpec(network string, genesis *Genesis, bootnodes []string) (*parityChainSpec, error) {
 	// Only ethash is currently supported between go-ethereum and Parity
 	if genesis.Config.Ethash == nil {
 		return nil, errors.New("unsupported consensus engine")
@@ -344,20 +327,20 @@ func newParityChainSpec(network string, genesis *core.Genesis, bootnodes []strin
 // pyEthereumGenesisSpec represents the genesis specification format used by the
 // Python Ethereum implementation.
 type pyEthereumGenesisSpec struct {
-	Nonce      hexutil.Bytes     `json:"nonce"`
-	Timestamp  hexutil.Uint64    `json:"timestamp"`
-	ExtraData  hexutil.Bytes     `json:"extraData"`
-	GasLimit   hexutil.Uint64    `json:"gasLimit"`
-	Difficulty *hexutil.Big      `json:"difficulty"`
-	Mixhash    common.Hash       `json:"mixhash"`
-	Coinbase   common.Address    `json:"coinbase"`
-	Alloc      core.GenesisAlloc `json:"alloc"`
-	ParentHash common.Hash       `json:"parentHash"`
+	Nonce      hexutil.Bytes  `json:"nonce"`
+	Timestamp  hexutil.Uint64 `json:"timestamp"`
+	ExtraData  hexutil.Bytes  `json:"extraData"`
+	GasLimit   hexutil.Uint64 `json:"gasLimit"`
+	Difficulty *hexutil.Big   `json:"difficulty"`
+	Mixhash    common.Hash    `json:"mixhash"`
+	Coinbase   common.Address `json:"coinbase"`
+	Alloc      GenesisAlloc   `json:"alloc"`
+	ParentHash common.Hash    `json:"parentHash"`
 }
 
-// newPyEthereumGenesisSpec converts a go-ethereum genesis block into a Parity specific
+// NewPyEthereumGenesisSpec converts a go-ethereum genesis block into a Parity specific
 // chain specification format.
-func newPyEthereumGenesisSpec(network string, genesis *core.Genesis) (*pyEthereumGenesisSpec, error) {
+func NewPyEthereumGenesisSpec(network string, genesis *Genesis) (*pyEthereumGenesisSpec, error) {
 	// Only ethash is currently supported between go-ethereum and pyethereum
 	if genesis.Config.Ethash == nil {
 		return nil, errors.New("unsupported consensus engine")

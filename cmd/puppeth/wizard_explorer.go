@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/ethereum/go-ethereum/core"
 	"github.com/ethereum/go-ethereum/log"
 )
 
@@ -55,7 +56,7 @@ func (w *wizard) deployExplorer() {
 	}
 	existed := err == nil
 
-	chainspec, err := newParityChainSpec(w.network, w.conf.Genesis, w.conf.bootnodes)
+	chainspec, err := core.NewParityChainSpec(w.network, w.conf.Genesis, w.conf.bootnodes)
 	if err != nil {
 		log.Error("Failed to create chain spec for explorer", "err", err)
 		return

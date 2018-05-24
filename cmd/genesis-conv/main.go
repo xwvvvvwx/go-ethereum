@@ -28,4 +28,6 @@ var (
 func main() {
 	flag.Parse()
 	fmt.Println(*argInput)
+
+	// core.NewParityChainSpec()
 }
